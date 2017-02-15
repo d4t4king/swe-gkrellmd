@@ -21,11 +21,12 @@ test -x $PROGRAM || exit 0
 case "$1" in
   start)
 	echolog "e" "s" "" "Starting gkrellmd"
-	${MODS_HOME}/usr/local/bin/gkrellmd -d > /dev/null 2>&1
+	${MODS_HOME}/usr/local/bin/gkrellmd -d --syslog > /dev/null 2>&1
 	if [ $? == 0 ]
 	then
 		echolog "e" "s" "" "gkrellmd started successfully."
 	else
+		echo "there was an error."
 		echolog "e" "s" "" "gkrellmd start error."
 	fi
 	;;
