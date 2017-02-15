@@ -1,0 +1,45 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:		gkrellmd
+# Required-Start:
+# Required-Stop:
+# Default-Start:	3
+# Default-Stop:
+# Short-Description:	gkrellmd
+# Description:		hardware monitoring
+### END INIT INFO
+
+. ./inc.rc-
+
+PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+MODS_HOME=/var/smoothwall/mods
+PROGRAM=${MODS_HOME}/usr/local/bin/gkrellmd
+
+test -x $PROGRAM || exit 0
+
+case "$1" in
+  start)
+	echolog "e" "s" "" "Starting gkrellmd"
+	${MODS_HOME}/usr/local/bin/gkrellmd -d > /dev/null 2>&1
+	if [ $? == 0 ]
+	then
+		echolog "e" "s" "" "gkrellmd started successfully."
+	else
+		echolog "e" "s" "" "gkrellmd start error."
+	fi
+	;;
+  stop)
+	;;
+  force-reload|restart)
+	$0 start
+	;;
+  status)
+	exit 0
+	;;
+  *)
+	echo "Usage: (${MODS_HOME})/etc/rc.d/rc.gkrellmd {start|stop|restart|force-reload|status}"
+	exit 1
+esac
+
+exit 0

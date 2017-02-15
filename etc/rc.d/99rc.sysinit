@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# start gkrellmd 
+/var/smoothwall/mods/gkrellmd/etc/rc.d/rc.gkrellmd start
+
