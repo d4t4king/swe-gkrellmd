@@ -14,16 +14,7 @@ print colored("Found ARCH: $arch \n", "cyan");
 
 my $cwd = getcwd();
 given ($cwd) {
-	when ('/var/smoothwall/mods/gkrellm') {
-		print colored("CWD: $cwd\n", "cyan");
-	}
-	when ('/var/smoothwall/mods/swe-gkrellmd') {
-		print colored("CWD: $cwd\n", "cyan");
-	}
-	when ('/var/smoothwall/mods-available/gkrellm') {
-		print colored("CWD: $cwd\n", "cyan");
-	}
-	when ('/var/smoothwall/mods-available/swe-gkrellmd') {
+	when ('/var/smoothwall/mods-available/gkrellmd') {
 		print colored("CWD: $cwd\n", "cyan");
 	}
 	when ('/root/swe-gkrellmd') {
@@ -62,6 +53,8 @@ END
 			system("/bin/ln -snf gkrellmd.$arch gkrellmd");
 			
 		}
+		chdir("/var/smoothwall/mods");
+		system("/bin/ln -snf ../mods-available/gkrellmd gkrellmd");
 		chdir $cwd;
 		system("/bin/touch installed");
 	}
