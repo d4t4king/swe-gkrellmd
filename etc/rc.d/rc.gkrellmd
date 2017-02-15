@@ -10,9 +10,9 @@
 # Description:		hardware monitoring
 ### END INIT INFO
 
-. ./inc.rc-
+[ -f /etc/rc.d/inc.rc-functions ] && . /etc/rc.d/inc.rc-functions
 
-PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/var/smoothwall/mods/gkrellmd/usr/local/bin
 MODS_HOME=/var/smoothwall/mods
 PROGRAM=${MODS_HOME}/usr/local/bin/gkrellmd
 

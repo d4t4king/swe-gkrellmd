@@ -28,13 +28,13 @@ given ($cwd) {
 	}
 	when ('/root/swe-gkrellmd') {
 		# dev mode ?
-		print colored("It looks like you are in the dev directory.  \n", "cyan") 
+		print colored("It looks like you are in the dev directory.  \n", "cyan"); 
 		print colored("Would you like to install this mod to your smoothie?  \n", "cyan");
 		my $ans = readline();
 		chomp($ans);
 		if ($ans =~ /[Yy](?:es)?/) {
 			system("mkdir -p /var/smoothwall/mods-available/gkrellmd");
-			system("cp -rf * /var/smoothwall/mods-availeble/gkrellmd/");
+			system("cp -rf * /var/smoothwall/mods-available/gkrellmd/");
 			chdir("/var/smoothwall/mods-available/gkrellmd");
 		} else {
 			print colored("Quitting.  \n", "bold red");
