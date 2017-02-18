@@ -16,6 +16,43 @@ my $cwd = getcwd();
 given ($cwd) {
 	when ('/var/smoothwall/mods-available/gkrellmd') {
 		print colored("CWD: $cwd\n", "cyan");
+		print colored("It looks like you are in the mod home directory.  Less to do!\n", "bold cyan"); 
+		print colored("Would you like to install this mod to your smoothie?  \n", "bold cyan");
+		my $ans = readline();
+		chomp($ans);
+		if ($ans =~ /[Yy](?:es)?/) {
+			chdir("bin");
+			# check for pre-existing symlink
+			if ((-e "gkrellmd") and (-l "gkrellmd" )) {
+				# the link already exists
+				print colored("Found a symlink already present.\n", "cyan");
+				my $target = readlink("gkrellmd");
+				print colored("Got link target: $target\n", "cyan");
+				if ($target eq "gkrellmd.$arch") {
+					# leave it be
+					print color("cyan");
+					print <<END;
+Link looks ok.  Leaving it alone.  If you notice any 
+peculiarities, you should remove the directory and 
+re-clone from github.com.
+END
+					print color('reset');
+				} else {
+					unlink("gkrellmd");
+					system("/bin/ln -snf gkrellmd.$arch gkrellmd");
+				}
+			} else {
+				# create the symlin for the appropriate ARCH
+				system("/bin/ln -snf gkrellmd.$arch gkrellmd");		
+			}
+			chdir("/var/smoothwall/mods");
+			# create the link the mod dir to enable the mod
+			system("/bin/ln -snf ../mods-available/gkrellmd gkrellmd");
+			chdir $cwd;
+			system("/bin/touch installed");
+		} else {
+			print colored("Quitting.  \n", "bold red");
+		}
 	}
 	when ('/root/swe-gkrellmd') {
 		# dev mode ?
@@ -30,7 +67,7 @@ given ($cwd) {
 		} else {
 			print colored("Quitting.  \n", "bold red");
 		}
-		chdir("usr/local/bin");
+		chdir("bin");
 		if ((-e "gkrellmd") and (-l "gkrellmd" )) {
 			# the link already exists
 			print colored("Found a symlink already present.\n", "cyan");
@@ -55,8 +92,9 @@ END
 		}
 		chdir("/var/smoothwall/mods");
 		system("/bin/ln -snf ../mods-available/gkrellmd gkrellmd");
-		chdir $cwd;
+		chdir("gkrellmd/");
 		system("/bin/touch installed");
+		chdir $cwd;
 	}
 	default { die colored("Unrecognized installation directory: $cwd", "red"); }
 }
