@@ -1,0 +1,8 @@
+MOD_NAME=gkrellmd
+MOD_VERSION=0.0.3
+MOD_DIR=/var/smoothwall/mods/gkrellmd
+MOD_INFO="gkrellmd for Smoothwall Express"
+MOD_LOG_NAME="[3.1] gkrellmd v${MOD_VERSION}"
+MOD_AUTHOR=dataking
+MOD_MAINTAINER=dataking
+MOD_FORUM=
