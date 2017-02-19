@@ -1,5 +1,8 @@
 #!/bin/bash
 
 # start gkrellmd 
-/var/smoothwall/mods/gkrellmd/etc/rc.d/rc.gkrellmd start
+#/var/smoothwall/mods/gkrellmd/etc/rc.d/rc.gkrellmd start
+/var/smoothwall/mods/gkrellmd/bin/gkrellmd -d -U nobody -G nobody 
+#-debug --debug-level 9 
+#> /dev/null 2>&1 
 
